@@ -1,44 +1,53 @@
 function letterCombinations(digits) {
+
   if (digits.length === 0) {
     return [];
   }
 
   const digitToLetters = {
-    "2": "abc",
-    "3": "def",
-    "4": "ghi",
-    "5": "jkl",
-    "6": "mno",
-    "7": "pqrs",
-    "8": "tuv",
-    "9": "wxyz",
+    0: '0',
+    1: '1',
+    2: 'abc',
+    3: 'def',
+    4: 'ghi',
+    5: 'jkl',
+    6: 'mno',
+    7: 'pqrs',
+    8: 'tuv',
+    9: 'wxyz',
   };
 
-  const combinations = [];
+  const combinations = [''];
 
-  backtrack("", digits);
+  for (const digit of digits) {
+    const letters = digitToLetters[digit];
+    const newCombinations = [];
+    for (const combination of combinations) {
+      for (const letter of letters) {
+        newCombinations.push(combination + letter);
+      }
+    }
+    combinations.splice(0, combinations.length, ...newCombinations);
+  }
 
   return combinations;
-
-  function backtrack(currentCombination, remainingDigits) {
-    if (remainingDigits.length === 0) {
-      combinations.push(currentCombination);
-      return;
-    }
-
-    const currentDigit = remainingDigits[0];
-    const letters = digitToLetters[currentDigit];
-
-    for (let i = 0; i < letters.length; i++) {
-      const letter = letters[i];
-      backtrack(currentCombination + letter, remainingDigits.slice(1));
-    }
-  }
 }
 
-const input = "23";
-const combinations = letterCombinations(input);
-console.log(combinations);
+/*Do not change anything below*/
+
+const readline = require("readline");
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false,
+});
+
+rl.on("line", function (line) {
+  const digits = line.trim();
+  const result = letterCombinations(digits);
+  console.log(result.sort());
+  rl.close();
+});
 
 
  
