@@ -1,53 +1,29 @@
-function letterCombinations(digits) {
+let com=[0,1,'abc','def','ghi','jkl','mno','pqrs','tuv','wxyz'];
 
-  if (digits.length === 0) {
-    return [];
-  }
 
-  const digitToLetters = {
-    0: '0',
-    1: '1',
-    2: 'abc',
-    3: 'def',
-    4: 'ghi',
-    5: 'jkl',
-    6: 'mno',
-    7: 'pqrs',
-    8: 'tuv',
-    9: 'wxyz',
-  };
+function f(ques,comb,res){
 
-  const combinations = [''];
-
-  for (const digit of digits) {
-    const letters = digitToLetters[digit];
-    const newCombinations = [];
-    for (const combination of combinations) {
-      for (const letter of letters) {
-        newCombinations.push(combination + letter);
-      }
+    if(ques.length==0){
+      res.push(comb);
+      return;
     }
-    combinations.splice(0, combinations.length, ...newCombinations);
-  }
+   
+    let dig=parseInt(ques[0]);
+    let curStr=com[dig];
 
-  return combinations;
+    for(let i=0;i<curStr.length;i++){
+        let curChar=curStr[i];
+        f(ques.substring(1),comb+curChar,res);
+    }
 }
 
-/*Do not change anything below*/
+function letterCombinations(input_digit) {
+  //Complete the function
+	let res=[];
+f(input_digit,"",res);
+return res;
+}
 
-const readline = require("readline");
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: false,
-});
-
-rl.on("line", function (line) {
-  const digits = line.trim();
-  const result = letterCombinations(digits);
-  console.log(result.sort());
-  rl.close();
-});
-
-
+module.exports = letterCombinations;
+      
  
